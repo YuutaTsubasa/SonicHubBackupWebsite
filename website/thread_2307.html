@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Unleashed 製作人的開發網誌更新 - SonicHub 討論區備份</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">🏠 首頁</a>
+            <a href="forum_27.html">📁 Sonic World Adventure</a>
+        </div>
+        
+        <h1>Sonic Unleashed 製作人的開發網誌更新</h1>
+        
+        <div class="post first-post">
+            <div class="post-header">
+                <span class="post-author">👤 derek</span>
+                <span class="post-date">🕐 2008-10-24 09:22:37</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                [附件 657 未找到]<br><br>這次的網誌是<span style="font-size: 2px">橋本義久所發出的</span><br><span style="font-size: 2px">且在這裡面似乎先釋出4張擷圖</span><br><a href="http://blogs.ign.com/SEGA_SonicUnleashed/2008/10/23/104478" target="_blank">http://blogs.ign.com/SEGA_SonicUnleashed/2008/10/23/104478</a>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 binyi</span>
+                <span class="post-date">🕐 2008-10-27 14:22:32</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                關於網誌中的四張擷圖,釋出無LOGO浮水印的<br>網址如下,點\&quot;放大鏡\&quot;觀看原大小<br>\&quot;<a href="http://flickr.com/photos/segaeurope/2977333397/sizes/o/in/set-72157606182122400/" target="_blank">第一張</a>、<a href="http://flickr.com/photos/segaeurope/2977333507/sizes/o/in/set-72157606182122400/" target="_blank">第二張</a>、<a href="http://flickr.com/photos/segaeurope/2978190496/sizes/o/in/set-72157606182122400/" target="_blank">第三張</a>、<a href="http://flickr.com/photos/segaeurope/2978190680/sizes/o/in/set-72157606182122400/" target="_blank">第四張</a>.\&quot;<br><br>(逃)
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2008-10-27 15:37:30</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                有大張的 太好了XD<br>有一張我很喜歡..收藏[:smile21:]
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 rescueTails</span>
+                <span class="post-date">🕐 2008-10-29 04:58:36</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                遲到的全文翻譯...<br>這次主要是講刺蝟引擎.這個引擎的技術估計以後可能會被其他的遊戲所運用呢<br><br>----------------------<br>翻譯:rescueTails<br>原文：橋本 義久<br><br>你們好,刺&amp;#29484;飯們! <br>我的名字是橋本 義久,作為SEGA日本Sonic Team開發工作室的一部分,是Sonic Unleashed的項目總監。我的職務包括遊戲指導，主遊戲設計師，以及技術指導，主要管理著維繫這個遊戲畫面質量的刺&amp;#29484;引擎。 <br><br>在第二篇Sonic Unleashed開發人員日誌中，我會談及下面兩個事情： <br>*Sonic Unleashed是如何在遊戲性方面取得改進的 <br>*刺&amp;#29484;引擎，這個用於維繫高品質畫面的遊戲引擎 <br><br><strong>Sonic的新概念 <br></strong><br>Sonic Unleashed有許多吸引人的元素——其中要數遊戲方式最為主要了。 <br>藝術指導川村幸子與我過去十年參與過許多Sonic遊戲的製作，從Sonic Adventure和Sonic Adventure 2開始。那段時間我們見證了許多Sonic遊戲的製作和發行，但是我們一直覺得缺了點什麼。 <br>我不斷問自己“這真的是Sonic粉絲們想要看到的遊戲嗎？”我覺得Sonic被束縛了手腳，我可以聽見他的呼喊：“我想跑得再快一些！我想更自由些！”在Sonic Team工作的日子裡，我一直堅信“Sonic the Hedgehog可以做到更好！” <br>到了2005年的某天，製作人西山彰則突然來問我說：“你想不想做下一款Sonic遊戲？”於是這翻開了Sonic新的一頁。 <br>我一開始就在積極思考怎樣才能創造出一個真正的Sonic。我很快找到了答案——其實這之前的我的腦子裡就已經有了理想的Sonic的模樣！ <br><br>*Sonic應當代表著速度。沒有速度就不是Sonic。所以我們必須優先保證速度感，並且讓他能夠暢通無阻地穿過整張跑道。 <br>*從最初的Genesisi平台上橫版Sonic借鑒一些元素。這必然會使老玩家欣喜不已。 <br>*然而，單純的橫板動作遊戲是不行的。那隻不過是懷舊版Sonic，我們要的是究級的Sonic。 <br>*保留3D追尾視角，這從Sonic Adventure開始就有了。 3D是保持速度感必不可少的元素。如果掌控得當，3D Sonic將會十分具有可玩性，所以我們更偏重第三人稱3D。 <br>*對比3D和2D，從兩種不同的遊戲方式中取其精華去其糟粕。然後將兩種方式進行無縫連接，做出一個能夠快速切換，同時保證2D和3D遊戲各自優點的關卡。 <br>*保留跳躍元素。遊戲速度在不同區域的對比可以造就更強的速度感。 <br>*為了達到超音速不間斷奔跑的效果，調整控制方式，尋求新的速度和動作機制。 <br>*準備大量漂亮的虛擬場景，玩家能夠從而更為融入遊戲體驗之中。 <br><br>因此，新的Sonic將從這些新的理念之中誕生。 <br><br><strong>釋放Sonic the Hedgehog！</strong> <br><br>我們於是開始了新的Sonic雛形的創作。 <br>首先我們需要新的操作機制來到到超音速不間斷奔跑的效果，我想到瞭如下的新動作——Quick Step和Ring Energy。 <br>通常來說，3D遊戲中玩家利用左邊的遙控桿移動人物，因為採用人體學模擬的效果，它大大限制了人物移動的方向性。既然Sonic要超音速地移動，在如此復雜的3D環境裡單用一個人體學搖桿是很難實現不間斷運動的。我們需要一個可以讓Sonic既快速移動又能躲避障礙的方式。這就是Quick Step的來由了。控制很簡單：在跑動時，按動右手或者左手食指按動觸發鍵（指L1或R1），就可以讓Sonic快速向邊上閃躲，同時還保持速度不變，從而Z字形繞過所有障礙物。 <br>接下來，我開始關注Rings這一Sonic遊戲的老傳統，利用rings，即使是一種一個，Sonic也可以抵擋來自敵人的任何攻擊。對於Sonic這樣的快節奏遊戲來說這個系統十分出色。但我覺得在遊戲裡多收少收兩個rings也沒什麼差別，這讓我灰心。於是我想到了一個新的理念叫做Ring Energy，這讓收集rings帶有獎勵性，並且把rings和速度結合起來。收集更多rings就可以獲得更多的能量，收集了足夠多的rings就可以發動“Sonic衝刺”，一種快速加速系統。 “Sonic衝刺”還可以撞毀牆壁和障礙物，並且即刺激也很容易上手。 <br>因此，rings所扮演的角色就重要多了。 rings收集得越多，Sonic在衝刺時的速度上限就越高，這也為Time Attack遊戲模式增色不少。在加上其他諸如Sonic漂移，滑行，攻擊判定，蹬牆跳，光速沖刺這類動作，我們成功地將這所有的理念匯聚，使得Sonic能夠在跑道上暢行無阻。 <br>速度機製完成了，我們就開始了關卡設計。關卡被設計成每隔15到30秒就會在2D和3D之間切換一次，在不同的區域，我們都小心地放置了許多地形元素比如上坡下坡，堤壩，大回環，峽谷，高牆，天花板，地板，滑道，彈簧和減震器。 <br>Sonic Unleashed裡的速度比起玩家所玩過的之前所有系列遊戲都要快上好幾倍。因為速度如此之快，所有所與的關卡都被設置成大概有10到20公里長。 <br>我們的美工盡力將這些地形要素組合在一起。最終我們看到了現在Sonic在跑道上的樣子。儘管操作簡單，但Sonic依然可以在美輪美奐的場景中自由地跑動。我們優化了攝像機使得2D與3D之間的銜接保持順暢。 <br>群體工作人員對遊戲方式感到極其興奮。 Sonic終於擺脫所有束縛回歸本色。此刻，Sonic真的被釋放了！ <br><br><strong>刺&amp;#29484;引擎與其虛擬效果</strong> <br><br>在Sonic Unleashed裡面我們同樣地還有震撼的遊戲畫面。我對做所謂的“一般質量效果”不感興趣，虛擬效果的目標是要和預渲染CG具有同樣的畫面水準，我想要再此作中實現這個目標。現在有了XBOX360了和PS3這樣的高端平台，這個目標可以達成了。 <br>回到2005年，那時我就看到了一些工作是利用Xbox360和PS3製作的遊戲，但我總覺得缺了點什麼。儘管比起上一個時代的遊戲機要好許多，但是就是少了點什麼東西。他們很注重陰影地圖，普通地圖，高光……頂點渲染之類的。好吧，光照效果確實可以很豐富……但融合得還是不夠自然。看起來所有的東西還是很平常。如今用戶們的要求越來越高，所以我們需要可以達到預渲染CG動畫效果的畫面。 <br>我開始思考怎樣才能達到這種條件。引擎圖像與預渲染圖像的差別在哪裡呢？我開始習慣性地在其它遊戲，以及許多預渲染動畫和即時動畫中找尋答案。最後，我終於發現物體間相互的投影正是遊戲圖像所缺少的東西。我想這就是那缺乏的東西了。這個概念在預渲染CG的領域裡面叫做全局光照（Global Illumination）。 <br>經過了一番艱苦的努力，我們終於自主研發出可以百分之百即時進行全局光照運算的渲染器。為了應付如此之鉅的計算工作，我們臨時建立了一個100台電腦連接而成的大型系統來分擔工作量，使得我們能在2到3天內就可以完成一條長度在10-20公里以內關卡的光源計算工作。 <br>同時，我們還研發出一種技術叫做光域（Light Field），它能夠確保在全局光照的環境下，Sonic，周圍物體以及敵人身上的陰影可以很自然地融入到背景當中。 <br>全局光照和光域結合的效果十分出彩，幾年前還只是白日夢中才能見到的畫面已經開始呈現在我眼前。我記得在觀看原始圖像時我的背景和人物畫師激動得眼睛都在閃閃發光。那時，我知道我成功了。 <br>你們應該知道，Sonic Unleashed還有Sonic。整個畫面看起來很卡通，通常來說，很少有人會把高端虛擬圖像和卡通聯繫在一起。但是我們已經擁有了一個世界領先的虛擬圖像技術，這為以後開發其它諸如第一人稱射擊和賽車類更加需要“寫實畫面”的遊戲打下了基礎。在虛擬效果和遊戲機制方面我們用了十成功力，這成就了Sonic Unleashed。 <br><br><strong>回歸本原？</strong> <br><br>在採訪中經常有人問“Sonic是否能回歸根本”這樣的問題。我的回答一直是“不會”。 Sonic Unleashed將Genesis年代他最根本的的精神重新帶回，但這只是Sonic Unleashed眾多新特性中的一小部分。我們會重新引入過去的優點但我們絕對不會“回歸”。事實上，我們要“超越”本原。 <br>我確信這款遊戲能夠讓大家興奮地喊道“Sonic回來了！”這款遊戲匯集了SEGA的最強陣容，Sonic Team的最大熱情。我等不及要讓大家一起來體驗這新的Sonic了。 <br>開發日誌將會有更多新的內容，希望你能繼續關注下次更新！敬請期待！
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2008-10-29 08:21:31</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                地形有用到減震器? Sonic身上裝了懸吊(誤)<br><br>這次用到的技術克服各種困難<br>真是太厲害了..<br>用在PC上FPS掛0
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 rescueTails</span>
+                <span class="post-date">🕐 2008-10-29 13:23:50</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                <blockquote>原文由 <em>opus</em> 於 2008/10/29 04:21 PM 發表 <a href="http://www.sonichub.tw/forum/redirect.php?goto=findpost&amp;pid=11929&amp;ptid=2307" target="_blank"><img src="http://www.sonichub.tw/forum/images/common/back.gif" alt="Image" style="max-width: 100%;"></a><br>地形有用到減震器? Sonic身上裝了懸吊(誤)<br><br>這次用到的技術克服各種困難<br>真是太厲害了..<br>用在PC上FPS掛0 </blockquote><br><br>據&amp;#35500;原文是jump bumper,大概是那些可以在上面彈來彈去的東西...?<br>這次的引擎技術可謂是首創了,應該會運用到以後的很多次世代遊戲上,橋本大人GJ啊[:smile42:]
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2008-10-29 14:50:34</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                <blockquote>原文由 <em>rescueTails</em> 於 2008/10/29 09:23 PM 發表 <a href="http://www.sonichub.tw/forum/redirect.php?goto=findpost&amp;pid=11939&amp;ptid=2307" target="_blank"><img src="http://www.sonichub.tw/forum/images/common/back.gif" alt="Image" style="max-width: 100%;"></a><br><br><br>據&amp;#35500;原文是jump bumper,大概是那些可以在上面彈來彈去的東西...?<br>這次的引擎技術可謂是首創了,應該會運用到以後的很多次世代遊戲上,橋本大人GJ啊[:smile42:] </blockquote><br>是好幾個GJ阿[:smile42:]<br>競速遊戲RCG都比不上了XD<br>果然是橋本...<br>如果讓電玩迷知道有這類的技術用在Sonic的遊戲上<br>我想應該會讓那些人嘆為觀止
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 willnazo</span>
+                <span class="post-date">🕐 2008-10-31 13:59:43</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                [Sonic終於擺脫所有束縛回歸本色。此刻，Sonic真的被釋放了！ ]<br>俺懂了,遊戲名稱會取為Sonic Unleashed(音速小子 解放/釋放)<br>原來是這個理念阿[:smile32:]
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 leo10000</span>
+                <span class="post-date">🕐 2008-10-31 15:11:24</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                原來那句就是取名Sonic Unleashed的原因啊!<br>還有都是Sonic Team製作<br>但美版日版的名稱不一樣<br>一樣都是Sonic Team製作<br>&amp;#29234;啥名稱不一樣<br>真讓人感到奇怪
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

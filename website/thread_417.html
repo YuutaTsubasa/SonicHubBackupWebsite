@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解決svchost.exe吃掉所有CPU資源的方法 - SonicHub 討論區備份</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">🏠 首頁</a>
+            <a href="forum_16.html">📁 電腦軟硬體與控制器周邊討論區</a>
+        </div>
+        
+        <h1>解決svchost.exe吃掉所有CPU資源的方法</h1>
+        
+        <div class="post first-post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2007-10-29 05:46:21</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                前同事Bob提供一則線報，他們公司在2/28進行Windows Update時，發生多台機器(XP &amp; 2003)更新時持續CPU 100%的情形，且必須重新開機才能解除狀況，經MIS人員通報微軟，歷經派駐工程師、蒐集資料、分析研判，測試後，於昨日確認，原來狀況是這樣的： <br><br>微軟於2007-2-1發佈了KB 的Hotfix，用以修復在更新時svchost.exe佔用100% CPU的問題及跳出Access Violation錯誤的問題。很不幸地KB916089 Hotfix更新的程式有點問題，若使用者機器的Windows Installer程式版本過舊時，之後再執行Windows Update，反而導致了svchost.exe CPU 100%的狀況，且會得到Access Violation的錯誤並導致Workstation及Server Service掛點。隨後微軟在2007-2-20發佈了KB，取代KB 916089。經Bob親自測試，換裝927891後，問題解決。 <br><br>微軟應已經將916089下架了才對，之後遇到此問題的人猜想不會太多，但仍公佈給大家參考一下，並謝謝Bob所提供的資料。 <br><br><br><br><strong>來源:</strong> 黑暗執行緒 : Windows Update After 2007-Feb Causes CPU 100% <br>---------------------------------------------------------------------------------------------------- <br><br>過年回到家後發現，家裡的 PC 和老媽的 Notebook ，莫名其妙的都會被 svchost.exe 佔用掉所有的 CPU 資源<span style="color: green">（難怪老媽一直跟我抱怨新買的 Notebook 總是跑的很慢 XD）</span>。一看到這個情況，腦中馬上浮現「不會是中毒了吧」的念頭，於是在 CPU 使用率總是停在100%的狀態下，花了半天的時間才把兩台電腦做掃毒、掃木馬以及Windows Update。結果當然，事情不是憨人想的那麼簡單，好幾個小時換來的代價就是，連個子兒都沒掃到，神秘的svchost.exe仍舊霸道地侵佔我的CPU。無可耐何之下只好求助Google大神，試了好多種解法都禺用，不過總算是皇天不負苦心人，最後還是讓我找到了解決的方法。 <br><br><br>svchost.exe 吃掉所有 CPU 資源的原因很多，不過我的狀況都是在執行 Windwos Update 時發生的<span style="color: green">（或是自動更新服務 Automatic Updates 執行時）</span>。因此解決方法主要就是把 Windows 的自動更新重設一次，步驟如下： <br><br><strong>一、首先檢查系統服務的狀態。</strong> [list=1][*]點「開始」–&gt;「執行」，輸入「services.msc」後按「確定」。[*]在服務「Automatic Updates」上點二下。[*]點選「登入」頁籤，確定登入身份為「本機系統帳戶」且「允許服務與桌面互動」「沒有」被選取。[*]確認服務已在目前的「硬體設定檔」中被啟用，如果沒有，按下「啟用」按鈕。[*]點選「一般」頁籤，確定「啟動類型」為「自動」，然後按下「啟動」按鈕以啟動服務。[*]對「Background Intelligent Transfer Service (BITS) 」服務重覆 2 ~ 5 的步驟。[/list]<strong>二、接著重新註冊 Windwos Update 的元件。</strong> [list=1][*]點選「開始」–&gt;「執行」。[*]輸入「REGSVR32 WUAPI.DLL」後按 Enter。[*]當看到 「DllRegisterServer 在 WUAPI.DLL 成功」 的訊息後按下「確定」。[*]重覆上述步驟重新註冊下列元件 <br>REGSVR32 WUAUENG.DLL <br>REGSVR32 WUAUENG1.DLL <br>REGSVR32 ATL.DLL <br>REGSVR32 WUCLTUI.DLL <br>REGSVR32 WUPS.DLL <br>REGSVR32 WUPS2.DLL <br>REGSVR32 WUWEB.DLL[/list]<strong>三、最後清除可能已損壞了的 Windows Update 暫存目錄。</strong> [list=1][*]點「開始」–&gt;「執行」，輸入「cmd」後按「確定」。[*]在命令提示字元中鍵入以下指令。（若出現錯誤訊息請先重開機後再報執行一次） <br>net stop WuAuServ[*]點「開始」–&gt;「執行」，輸入「%windir%」後按「確定」。[*]找到「SoftwareDistribution」並更名為「SDold」。[*]點「開始」–&gt;「執行」，輸入「cmd」後按「確定」，並在在命令提示字元中鍵入以下指令。 <br>net start WuAuServ[/list]<strong>四、大功告成！</strong>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
