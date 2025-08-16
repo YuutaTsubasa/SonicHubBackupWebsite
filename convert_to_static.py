@@ -381,6 +381,9 @@ class SonicHubConverter:
         # Escape HTML characters first
         text = html.escape(text)
         
+        # Remove unsupported font selection BBCode
+        text = re.sub(r'\[font=[^\]]*\](.*?)\[/font\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        
         # Convert common BBCode tags
         conversions = [
             # Basic formatting
@@ -388,11 +391,15 @@ class SonicHubConverter:
             (r'\[i\](.*?)\[/i\]', r'<em>\1</em>'),
             (r'\[u\](.*?)\[/u\]', r'<u>\1</u>'),
             
+            # Special italic with serif support [i=s]
+            (r'\[i=s\](.*?)\[/i\]', r'<em style="font-family: serif;">\1</em>'),
+            
             # Colors
             (r'\[color=(.*?)\](.*?)\[/color\]', r'<span style="color: \1">\2</span>'),
             
-            # Size
-            (r'\[size=(.*?)\](.*?)\[/size\]', r'<span style="font-size: \1px">\2</span>'),
+            # Size - increase minimum size for small text (was too small)
+            (r'\[size=([12])\](.*?)\[/size\]', r'<span style="font-size: 8px">\2</span>'),  # Minimum 8px instead of 1-2px
+            (r'\[size=(\d+)\](.*?)\[/size\]', r'<span style="font-size: \1px">\2</span>'),
             
             # Links
             (r'\[url=(.*?)\](.*?)\[/url\]', r'<a href="\1" target="_blank">\2</a>'),

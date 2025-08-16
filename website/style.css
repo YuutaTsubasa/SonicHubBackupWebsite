@@ -187,3 +187,156 @@ pre {
     border-radius: 5px;
     color: #0066cc;
 }
+
+/* Search functionality styles */
+.search-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    border: 2px solid #0066cc;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
+}
+
+.search-button {
+    padding: 12px 24px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-button:hover {
+    background-color: #0052a3;
+}
+
+.search-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: #666;
+}
+
+.search-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    color: #0066cc;
+    font-style: italic;
+}
+
+.search-results {
+    display: none;
+    margin-top: 15px;
+}
+
+.search-results-header {
+    font-weight: bold;
+    color: #0066cc;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #0066cc;
+}
+
+.search-result-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    border-left: 4px solid #0066cc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-result-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.search-result-title a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.search-result-title a:hover {
+    text-decoration: underline;
+}
+
+.search-result-matches {
+    color: #666;
+}
+
+.search-match {
+    margin: 8px 0;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 3px;
+}
+
+.search-match-title {
+    background-color: #e7f3ff;
+    font-weight: bold;
+}
+
+.search-match-post {
+    background-color: #f0f8ff;
+}
+
+.search-post-info {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.search-post-match {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #fff3cd;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.search-no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-style: italic;
+}
+
+.search-error {
+    text-align: center;
+    padding: 20px;
+    color: #dc3545;
+    background-color: #f8d7da;
+    border-radius: 5px;
+}
