@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重大IE 7惡意程式網上蔓延 微軟今日釋出緊急更新 - SonicHub 討論區備份</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">🏠 首頁</a>
+            <a href="forum_16.html">📁 電腦軟硬體與控制器周邊討論區</a>
+        </div>
+        
+        <h1>重大IE 7惡意程式網上蔓延 微軟今日釋出緊急更新</h1>
+        
+        <div class="post first-post">
+            <div class="post-header">
+                <span class="post-author">👤 binyi</span>
+                <span class="post-date">🕐 2008-12-17 14:12:00</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                <a href="http://www.zdnet.com.tw/news/software/0,2000085678,20135105,00.htm" target="_blank">詳細資訊請至這裡觀看</a>.<br>蠻重要的<br><br><br>Microsoft Update：<a href="http://update.microsoft.com" target="_blank">http://update.microsoft.com</a>(一般在視窗的工具列有快速連結)
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 derek</span>
+                <span class="post-date">🕐 2008-12-17 14:30:54</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                微軟的公告：<a href="http://support.microsoft.com/kb/961051/en-us/" target="_blank">http://support.microsoft.com/kb/961051/en-us/</a><br>IE 7 零時差攻擊(Zero Day Attack) 重大威脅警訊<br><br>有心人士可以在網頁中放任何檔案，例如.. 木馬等等<br>IE會自動去開啟<br><br>解決方式就是依照目前微軟公告的方式去操作<br><br>另外的新聞報導：<a href="http://n.yam.com/bcc/international/200812/20081217724321.html" target="_blank">http://n.yam.com/bcc/international/200812/20081217724321.html</a><br><blockquote>據報導，「IE 7.0」的這個漏洞，可以讓駭客直接長驅直入，駭客只要引導他人去瀏覽植入病毒的網站，便可掌控他人電腦。瀏覽器使用者不需下載任何東西，電腦就會中毒。初步估計，目前為止，全球已經有兩百萬個用戶的電腦，遭受攻擊。</blockquote>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 Pikachu</span>
+                <span class="post-date">🕐 2008-12-18 03:00:14</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                昨日在報紙看到了這個消息.........<br><br>用FF會佔用電腦很大的<br><br>怎麼辦[:egg4:] <br><br>還有其他可以用的瀏覽器嗎........?
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2008-12-18 04:54:31</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                IE7  0day 波及了微軟全線系統，目前暫時沒有補丁。微軟於近日發佈了一份安全通報，指導您如何暫時遮罩此漏洞。<br>漏洞出在 OLEDB32.dll 這個檔上。所以我們的目的就是遮罩這個檔。對此，微軟連出了4個殺手&amp;#37927;：<br>1. SACL 法（僅適用於 Vista）<br>[Unicode]<br>Unicode=yes<br>[Version]<br>signature=\&quot;$CHICAGO$\&quot;<br>Revision=1<br>[File Security]<br>\&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot;,2,\&quot;SML;;NWNRNX;;;ME)\&quot;<br><br>將以上內容保存為 BlockAccess_x86.inf<br>然後在命令提示符裏執行 SecEdit /configure /db BlockAccess.sdb /cfg &lt;inf file&gt;<br>其中 &lt;inf file&gt; 為 inf 檔路徑。若成功會看到“任務成功結束”的提示。<br><br>2. 禁用 Row Position 功能法<br>HKEY_CLASSES_ROOT\\CLSID\\{2048EEE6-7FA2-11D0-9E6A-00A0C9138C29}<br>打開註冊表編輯器，將此鍵刪除即可。<br><br>3. 取消 DLL 註冊法<br>在命令提示符中輸入 Regsvr32.exe /u \&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot;<br>即可<br><br>4. 許可權設置法<br>在命令提示符中輸入 cacls \&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot; /E /P everyone:N<br><br>Vista 系統則需要輸入3個命令：<br>takeown /f \&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot;<br>icacls \&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot; /save %TEMP%\\oledb32.32.dll.TXT<br>icacls \&quot;%ProgramFiles%\\Common Files\\System\\Ole DB\\oledb32.dll\&quot; /deny everyoneF)<br><br>其中第一種方法影響最小（只影響 IE 對此 DLL 的訪問）。<br><br>附：此漏洞影響的系統、軟體列表<br>•        Windows Internet Explorer 7<br>•        Windows Internet Explorer 7 for Windows XP<br>•        Windows Internet Explorer 7 for Windows Server 2003<br>•        Windows Internet Explorer 7 for Windows Server 2003 IA64<br>•        Windows Internet Explorer 7 in Windows Vista<br>•        Windows Internet Explorer 8 Beta<br>•        Microsoft Internet Explorer 6.0 Service Pack 2<br>•        Microsoft Internet Explorer 6.0 Service Pack 1<br>•        Microsoft Internet Explorer 6.0<br>•        Microsoft Internet Explorer 5.01 Service Pack 4<br>•        Windows Server 2008 Datacenter without Hyper-V<br>•        Windows Server 2008 Enterprise without Hyper-V<br>•        Windows Server 2008 for Itanium-Based Systems<br>•        Windows Server 2008 Standard without Hyper-V<br>•        Windows Server 2008 Datacenter<br>•        Windows Server 2008 Enterprise<br>•        Windows Server 2008 Standard<br>•        Windows Web Server 2008<br>•        Windows Vista Service Pack 1, when used with:<br>o        Windows Vista Business<br>o        Windows Vista Enterprise<br>o        Windows Vista Home Basic<br>o        Windows Vista Home Premium<br>o        Windows Vista Starter<br>o        Windows Vista Ultimate<br>o        Windows Vista Enterprise 64-bit Edition<br>o        Windows Vista Home Basic 64-bit Edition<br>o        Windows Vista Home Premium 64-bit Edition<br>o        Windows Vista Ultimate 64-bit Edition<br>o        Windows Vista Business 64-bit Edition<br>•        Microsoft Windows Server 2003 Service Pack 1, when used with:<br>o        Microsoft Windows Server 2003, Standard Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Enterprise Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Datacenter Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Web Edition<br>o        Microsoft Windows Server 2003, Datacenter Edition for Itanium-Based Systems<br>o        Microsoft Windows Server 2003, Enterprise Edition for Itanium-based Systems<br>•        Microsoft Windows Server 2003, Datacenter x64 Edition<br>•        Microsoft Windows Server 2003, Enterprise x64 Edition<br>•        Microsoft Windows Server 2003, Standard x64 Edition<br>•        Microsoft Windows XP Professional x64 Edition<br>•        Microsoft Windows Server 2003 Service Pack 2, when used with:<br>o        Microsoft Windows Server 2003, Standard Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Enterprise Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Datacenter Edition (32-bit x86)<br>o        Microsoft Windows Server 2003, Web Edition<br>o        Microsoft Windows Server 2003, Datacenter x64 Edition<br>o        Microsoft Windows Server 2003, Enterprise x64 Edition<br>o        Microsoft Windows Server 2003, Standard x64 Edition<br>o        Microsoft Windows XP Professional x64 Edition<br>o        Microsoft Windows Server 2003, Datacenter Edition for Itanium-Based Systems<br>o        Microsoft Windows Server 2003, Enterprise Edition for Itanium-based Systems<br>•        Microsoft Windows XP Service Pack 2, when used with:<br>o        Microsoft Windows XP Home Edition<br>o        Microsoft Windows XP Professional<br>•        Microsoft Windows XP Service Pack 3, when used with:<br>o        Microsoft Windows XP Home Edition<br>o        Microsoft Windows XP Professional<br>對於非 x86 系統請參考微軟安全通報自行操作。公告<a href="http://support.microsoft.com/kb/961051/en-us/" target="_blank">http://support.microsoft.com/kb/961051/en-us/</a>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 Pikachu</span>
+                <span class="post-date">🕐 2008-12-18 07:48:23</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                註冊表編輯器在那裡的............?
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 Snowy-su</span>
+                <span class="post-date">🕐 2008-12-18 09:27:00</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                昨天就知道了 =口=|||<br>聽說挺嚴重的<br><br>結果就下了Firefox 去...
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 andrewsonic</span>
+                <span class="post-date">🕐 2008-12-18 10:41:41</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                應該說...<br>我用的是Mac[:smile21:] <br>個人認為PC超容易中毒的
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 wendy92lam</span>
+                <span class="post-date">🕐 2008-12-18 12:25:49</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                FF能幫擋下部分病毒網站,一直都在用<br>只有某些要用IE開的才會轉IE<br>誰知那些要用IE開的網站偏偏就有毒.囧
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 andrewsonic</span>
+                <span class="post-date">🕐 2008-12-18 14:43:48</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                不過現在很麻煩的就是<br>FF3記憶體吃超兇<br>光開著就吃掉了5000K左右<br>因為太慢只好回去用IE[:smile17:]
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 wendy92lam</span>
+                <span class="post-date">🕐 2008-12-18 15:09:12</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                我用IE7時..<br>由舊視窗連結開新視窗我通常都會Lag..不知道是什麼原因<br>所以我很少使用IE<br><br>FF吃記憶體我也不管了,開分頁方便快<br>又不那麼易中毒...應該吧
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 aoifh</span>
+                <span class="post-date">🕐 2008-12-19 02:45:10</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                \&quot;註冊表編輯器\&quot;就是登錄檔編輯程式<br>在執行的對話框輸入：regedit 就可以了<br><br>結果很多人都是在IE7和FF3巡迴XD<br>其實用FF也很危險<br>看這篇就知道了<a href="http://www.sonichub.tw/forum/viewthread.php?tid=2674" target="_blank">http://www.sonichub.tw/forum/viewthread.php?tid=2674</a>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 binyi</span>
+                <span class="post-date">🕐 2008-12-19 03:01:22</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                昨天微軟發布最新安全性更新程式MS08-078<br><a href="http://www.microsoft.com/taiwan/technet/security/bulletin/ms08-078.mspx" target="_blank">http://www.microsoft.com/taiwan/technet/security/bulletin/ms08-078.mspx</a><br><br>(微軟用戶)建議設定微軟的更新為自動,或定期上網去更新<br>及養成定期掃毒的好習慣吧
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 opus</span>
+                <span class="post-date">🕐 2008-12-19 05:33:20</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                偷吃步...不用線上更新<br>直接下載更新檔就好了[:smile35:]
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小薑雜談：CAPTCHA - SonicHub 討論區備份</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="index.html">🏠 首頁</a>
+            <a href="forum_15.html">📁 網友哈啦區</a>
+        </div>
+        
+        <h1>小薑雜談：CAPTCHA</h1>
+        
+        <div class="post first-post">
+            <div class="post-header">
+                <span class="post-author">👤 1357902468</span>
+                <span class="post-date">🕐 2009-03-30 12:30:05</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                [align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha_banner.jpg" alt="Image" style="max-width: 100%;">[/align]<br>什麼是 CAPTCHA？就是在許多網頁表單的最後，要你輸入幾個英文字母，確保你不是機器人的那個東西。CAPTCHA 的全名是「Completely Automated Public Turing test to tell Computers and Humans Apart」，或「全自動區分電腦與人類的圖靈測試」，實作的方式很簡單，就是問一個電腦答不出來，但人類答得出來的問題。<br><br>早期的 CAPTCHA 很簡單，大多就是在一個比較雜亂的背景上有幾個英文字母，要求使用者將字母寫出來。但隨著電腦判斷、解析的演算法愈來愈進步，創造 CAPTCHA 的這一方也不得不努力，將 CAPTCHA 設計得愈來愈複雜難明...直到連人類都快要辨識不出來的地步 orz。<br><br>電腦辨識圖片一共有三個步驟：<br><br>1.　消去背景 <br>2.　切割元素 <br>3.　辨認元素 <br>現有的文字型 CAPTCHA 不外乎就是在這三個上面打轉，舉例來說：<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha1.jpg" alt="Image" style="max-width: 100%;">[/align]<br>上圖的這個 EZ-Gimpy 產生的 CAPTCHA 就用了一個漸層的背景和扭曲的文字來讓電腦辨識困難。事實上，以現代技術來說，這差不多是最容易破解的一種了 -- 電腦就是消去背景和辨認元素這兩個部份最擅長，因此要讓電腦辨識困難點，還必須要加上切割元素的困難度才行。<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha2.jpg" alt="Image" style="max-width: 100%;">[/align]<br>上圖的這種 CAPTCHA 叫 reCAPTCHA，是一個使用率還蠻高的 CAPTCHA。reCAPTCHA 用的技術很有趣：它是去掃瞄古書，並從中找出電腦無法辨認出來的古字，加上一條增加切割元素困難度的曲線後，呈現給使用者。系統只知道兩個字當中其中一個的答案，如果你答對了它知道的那個，那它就假設你是人類無誤，並假設你的另外一個字也有答對，這樣 reCAPTCHA 知道的字就又多一個了。<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha3.gif" alt="Image" style="max-width: 100%;">[/align]<br>KCAPTCHA 則是讓所有的字都黏在一起，讓電腦無法正確地切割元素。<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha6.jpg" alt="Image" style="max-width: 100%;">[/align]<br>這是一個利用背景和前景的複雜度來增加辨試困難度的例子。不過總覺得這比扭曲的字還虐待人啊 = =。<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha7.gif" alt="Image" style="max-width: 100%;">[/align]<br>雖然不多見，但也有些網站用的是動畫的 CAPTCHA。這種對電腦來說幾乎是不可能破解的，因為電腦很難知道哪個影格裡的資料是正確的。當然，也不一定要靠文字才能做 CAPTCHA，像下面這個：<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha8.jpg" alt="Image" style="max-width: 100%;">[/align]<br>這個系統叫「KittenAuth」，顧名思議就是要你從九張可愛的動物中選出三張是貓咪的圖來。這個利用的是電腦對沒有固定模式的東西（像照片）的內容沒轍的這點。另外一種 CAPTCHA 完全捨棄了圖片，只問一個大概只有人類才答得出來的問題，例如：<br><br>●浴缸裡裝滿了熱__。 <br>●癮科技最帥的編輯是__。 <br>之類的。看完一些比較正常的 CAPTCHA 之後，小薑也在網路上四處逛了逛，找看看有沒有一些真的讓人頭昏眼花的 CAPTCHA。下面幾個大家回答得出來嗎？<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha9.gif" alt="Image" style="max-width: 100%;">[/align]<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha10.jpg" alt="Image" style="max-width: 100%;">[/align]<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha11.png" alt="Image" style="max-width: 100%;">[/align]<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha12.png" alt="Image" style="max-width: 100%;">[/align]<br>[align=center]「請以 PGN 格式，回答執白者的最佳下一步」[/align]<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha13.gif" alt="Image" style="max-width: 100%;">[/align]<br>[align=center]<img src="http://www.blogcdn.com/chinese.engadget.com/media/2009/03/captcha14.jpg" alt="Image" style="max-width: 100%;">[/align]<br><br><a href="http://chinese.engadget.com/2009/03/30/on-captcha/" target="_blank">引用來源</a>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <span class="post-author">👤 1357902468</span>
+                <span class="post-date">🕐 2009-03-31 12:18:54</span>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <div class="post-content">
+                有人在GOOGLE上找到一些很囧的CAPTCHA<br><img src="http://cfsilence.com/blog/client/images/easy_captcha1.png" alt="Image" style="max-width: 100%;"><br><img src="http://www.iishacks.com/wp-content/uploads/2007/11/captcha.gif" alt="Image" style="max-width: 100%;">←(色盲測試阿…)<br><img src="http://www.haywirehacking.com/storage/captcha.png" alt="Image" style="max-width: 100%;">
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

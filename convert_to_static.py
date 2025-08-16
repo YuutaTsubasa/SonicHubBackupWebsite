@@ -78,11 +78,59 @@ class SonicHubConverter:
     
     def _extract_posts(self, content):
         """Extract post data from SQL"""
-        # Find the INSERT statements for cdb_posts
-        post_pattern = r"INSERT INTO `cdb_posts`.*?VALUES\s*(.*?);"
+        # Find ALL INSERT statements for cdb_posts - there are multiple ones
+        # The issue is that VALUES data can contain semicolons, so we need a smarter approach
         
-        for match in re.finditer(post_pattern, content, re.DOTALL):
-            values_text = match.group(1)
+        # Find all INSERT statement start positions
+        insert_pattern = r"INSERT INTO `cdb_posts`"
+        insert_positions = []
+        for match in re.finditer(insert_pattern, content):
+            insert_positions.append(match.start())
+        
+        print(f"找到 {len(insert_positions)} 個 cdb_posts INSERT 語句")
+        
+        total_processed = 0
+        sart_found = False
+        
+        # Process each INSERT statement by finding its boundaries
+        for i, start_pos in enumerate(insert_positions):
+            # Find the end of this statement
+            if i + 1 < len(insert_positions):
+                # End is just before the next INSERT
+                search_end = insert_positions[i + 1]
+            else:
+                # For the last statement, search to end of content
+                search_end = len(content)
+            
+            # Find the last semicolon before the next INSERT (or end)
+            search_text = content[start_pos:search_end]
+            
+            # Look for VALUES section
+            values_match = re.search(r'VALUES\s+', search_text)
+            if not values_match:
+                continue
+                
+            values_start = start_pos + values_match.end()
+            
+            # Find the ending semicolon - look for the last semicolon in this section
+            search_for_end = content[values_start:search_end]
+            # Find all semicolons and take the last one that's likely the statement terminator
+            semicolons = []
+            for match in re.finditer(r';', search_for_end):
+                semicolons.append(match.start())
+            
+            if not semicolons:
+                continue
+                
+            # Use the last semicolon as the end
+            values_end = values_start + semicolons[-1]
+            values_text = content[values_start:values_end]
+            
+            # Check if this VALUES section contains SART
+            if 'SART' in values_text and '7916' in values_text:
+                print(f"✓ Found INSERT statement {i} containing SART post")
+                sart_found = True
+            
             post_records = self._parse_sql_posts_values(values_text)
             
             for record in post_records:
@@ -96,9 +144,16 @@ class SonicHubConverter:
                         author = record[4].strip("'\"")
                         authorid = int(record[5])
                         subject = record[6].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n')
-                        # Handle empty subjects
+                        
+                        # NEVER set subjects to (無標題) - if empty, investigate why
+                        # For now, use the first few words of message if subject is truly empty
                         if not subject.strip():
-                            subject = "(無標題)"
+                            message_preview = record[8].strip("'\"").replace('\\r\\n', ' ').replace('\\n', ' ')[:50]
+                            if message_preview.strip():
+                                subject = f"[{message_preview}...]"
+                            else:
+                                subject = f"[PID {pid}]"
+                        
                         dateline = int(record[7])
                         message = record[8].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n')
                         
@@ -114,14 +169,25 @@ class SonicHubConverter:
                             'message': message
                         }
                         self.posts.append(post)
+                        total_processed += 1
                         
                         # Add to forum's posts
                         if post['fid'] in self.forums:
                             self.forums[post['fid']]['posts'].append(post)
                             
+                        # Log specific posts we're looking for
+                        if tid == 7916 and first == 1:
+                            print(f"✓ Found SART article: PID {pid}, TID {tid}, Subject: '{subject[:50]}...'")
+                            
                     except (ValueError, IndexError) as e:
                         print(f"警告: 無法解析文章記錄 PID {record[0] if len(record) > 0 else 'unknown'}: {e}")
                         continue
+        
+        print(f"處理了 {total_processed} 篇文章記錄")
+        if not sart_found:
+            print("❌ 警告: 沒有找到包含 SART 文章的 INSERT 語句!")
+        else:
+            print("✓ 找到了包含 SART 文章的 INSERT 語句")
     
     def _extract_attachments(self, content):
         """Extract attachment data from SQL"""
@@ -293,43 +359,6 @@ class SonicHubConverter:
             i += 1
         
         return records
-        """Parse individual record fields handling quotes and escaping"""
-        fields = []
-        current_field = ""
-        in_quotes = False
-        quote_char = None
-        i = 0
-        
-        while i < len(record_text):
-            char = record_text[i]
-            
-            if char in ("'", '"') and not in_quotes:
-                # Starting a quoted field
-                in_quotes = True
-                quote_char = char
-            elif char == quote_char and in_quotes:
-                # Check for escaped quote (doubled quotes)
-                if i + 1 < len(record_text) and record_text[i + 1] == quote_char:
-                    current_field += char
-                    i += 1  # Skip the next character
-                else:
-                    # End of quoted field
-                    in_quotes = False
-                    quote_char = None
-            elif char == ',' and not in_quotes:
-                # Field separator
-                fields.append(current_field.strip())
-                current_field = ""
-            else:
-                current_field += char
-            
-            i += 1
-        
-        # Add the last field
-        if current_field.strip():
-            fields.append(current_field.strip())
-        
-        return fields
     
     def _organize_threads(self):
         """Organize posts into threads"""
@@ -659,11 +688,18 @@ pre {
         <ul class="forum-list">
 """
         
-        # Sort forums by ID
+        # Sort forums by ID and handle hierarchy
         sorted_forums = sorted(self.forums.items(), key=lambda x: x[0])
         
         for fid, forum in sorted_forums:
-            if forum['type'] in ['forum', 'group']:  # Only show main forums
+            if forum['type'] == 'group':
+                # Categories are displayed as headers, not clickable links
+                html_content += f"""            <li class="forum-category">
+                <h3 style="color: #0066cc; margin: 20px 0 10px 0; font-size: 1.2em; border-bottom: 1px solid #ddd;">{html.escape(forum['name'])}</h3>
+            </li>
+"""
+            elif forum['type'] == 'forum':
+                # Actual forums are clickable
                 thread_count = len([tid for tid in self.threads if any(p['fid'] == fid for p in self.threads[tid])])
                 post_count = len(forum['posts'])
                 
@@ -689,7 +725,8 @@ pre {
     def _generate_forum_pages(self):
         """Generate individual forum pages"""
         for fid, forum in self.forums.items():
-            if forum['type'] not in ['forum', 'group']:
+            # Only generate pages for actual forums, not categories
+            if forum['type'] != 'forum':
                 continue
                 
             # Get all threads for this forum
