@@ -1,0 +1,78 @@
+﻿[Script Info]
+Title: <untitled>
+Original Script: <unknown>
+ScriptType: v4.00
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: T,Comic Sans MS,22,65280,16777215,0,16711680,-1,0,1,2,0,1,10,5,35,0,0
+Style: B,Comic Sans MS,22,65280,16777215,0,16711680,-1,0,1,2,0,3,5,10,10,0,0
+Style: S,Comic Sans MS,18,16777215,16777215,0,16711680,-1,0,1,2,0,1,10,5,60,0,0
+Style: T1,Comic Sans MS,36,16777215,16777215,0,16711680,-1,0,1,4,0,2,10,5,200,0,0
+Style: T2,Comic Sans MS,18,16777215,16777215,0,16711680,-1,0,1,2,0,2,10,5,100,0,0
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: Marked=0,0:00:06.00,0:00:18.00,T1,,0000,0000,0000,,Dear My Friend
+Dialogue: Marked=0,0:00:06.00,0:00:18.00,T2,,0000,0000,0000,, Performed by Brent Cash\N　 Music       by Mariko Nanba\NLyrics      by Candie Y　\N
+Dialogue: Marked=0,0:00:20.45,0:00:22.09,S,,0000,0000,0000,,◎ ◎ ◎ ◎
+Dialogue: Marked=0,0:00:22.09,0:00:23.09,S,,0000,0000,0000,,◎ ◎ ◎
+Dialogue: Marked=0,0:00:23.09,0:00:24.09,S,,0000,0000,0000,,◎ ◎
+Dialogue: Marked=0,0:00:24.09,0:00:25.09,S,,0000,0000,0000,,◎
+Dialogue: Marked=0,0:00:20.45,0:00:29.09,T,,0000,0000,0000,,{\K500} {\K47}Good {\K44}times {\K50}and {\K105}bad times,
+Dialogue: Marked=0,0:00:20.45,0:00:32.37,B,,0000,0000,0000,,{\K764} {\K49}I can {\K90}count on {\K100}being with {\K70}you.
+Dialogue: Marked=0,0:00:29.10,0:00:38.49,T,,0000,0000,0000,,{\K244} {\K73}I {\K90}thank you {\K31}for {\K109}staying {\K163}so {\K96}true
+Dialogue: Marked=0,0:00:32.38,0:00:41.54,B,,0000,0000,0000,,{\K511} {\K24}My {\K55}life {\K95}will go on a {\K96}long time,
+Dialogue: Marked=0,0:00:38.49,0:00:44.96,T,,0000,0000,0000,,{\K206} {\K56}Have to {\K90}catch up {\K45}when I {\K115}see you
+Dialogue: Marked=0,0:00:41.54,0:00:50.90,B,,0000,0000,0000,,{\K252} {\K18}And {\K101}You are {\K49}my {\K102}reason {\K51}I can {\K110}make {\K50}it {\K100}through
+Dialogue: Marked=0,0:00:44.96,0:00:57.42,T,,0000,0000,0000,,{\K502} {\K51}I will {\K156}give my word {\K53}that {\K94}I will {\K99}come in {\K53}time to {\K116}rescue
+Dialogue: Marked=0,0:00:50.90,0:01:03.33,B,,0000,0000,0000,,{\K583} {\K105}My heart {\K46}will {\K85}always {\K64}be {\K146}with {\K88}you
+Dialogue: Marked=0,0:00:57.42,0:01:10.07,T,,0000,0000,0000,,{\K535} {\K51}I'm so {\K61}glad {\K150}I met you {\K152}being with me {\K200}wherever,
+Dialogue: Marked=0,0:01:03.33,0:01:15.84,B,,0000,0000,0000,,{\K587} {\K95}an' made for {\K136}each other {\K325}forever
+Dialogue: Marked=0,0:01:10.07,0:01:22.74,T,,0000,0000,0000,,{\K545} {\K46}I {\K105}know {\K156}life can be {\K152}tough on you {\K147}time and time again
+Dialogue: Marked=0,0:01:15.84,0:01:28.72,B,,0000,0000,0000,,{\K596} {\K153}laughter {\K147}leading {\K137}your {\K152}way
+Dialogue: Marked=0,0:01:22.74,0:01:34.82,T,,0000,0000,0000,,{\K581} {\K85}I will wipe {\K68}away my {\K65}tears{\K11} {\K305}to-morrow
+Dialogue: Marked=0,0:01:28.72,0:01:45.40,B,,0000,0000,0000,,{\K542} {\K112}Life must {\K158}go on, {\K51}that's the {\K100}reason {\K60}that you {\K106}travel {\K40}a{\K368}way
+Dialogue: Marked=0,0:01:34.82,0:01:50.41,T,,0000,0000,0000,,{\K1150} {\K54}I will {\K107}be there {\K140}if you need me
+Dialogue: Marked=0,0:01:45.40,0:01:53.13,B,,0000,0000,0000,,{\K393} {\K52}And I {\K73}know {\K135}you'll do the same
+Dialogue: Marked=0,0:01:50.41,0:01:59.32,T,,0000,0000,0000,,{\K202} {\K149}I can see you, {\K160}I can hear you {\K50}in my {\K208}heart
+Dialogue: Marked=0,0:01:53.13,0:02:02.90,B,,0000,0000,0000,,{\K564} {\K54}You will {\K106}be here {\K138}if I need you
+Dialogue: Marked=0,0:01:59.32,0:02:05.88,T,,0000,0000,0000,,{\K261} {\K53}I will {\K91}never {\K40}have to {\K109}guess
+Dialogue: Marked=0,0:02:02.90,0:02:12.25,B,,0000,0000,0000,,{\K210} {\K162}'Cause we are {\K52}very {\K154}special {\K224}friends
+Dialogue: Marked=0,0:02:31.60,0:02:40.62,T,,0000,0000,0000,,{\K500} {\K28}So {\K256}send me a letter
+Dialogue: Marked=0,0:02:31.60,0:02:43.87,B,,0000,0000,0000,,{\K775} {\K53}Let me {\K283}know how you're doing
+Dialogue: Marked=0,0:02:40.62,0:02:49.91,T,,0000,0000,0000,,{\K276} {\K122}You are my {\K97}lifetime {\K46}and {\K161}true {\K119}friend
+Dialogue: Marked=0,0:02:43.87,0:02:52.97,B,,0000,0000,0000,,{\K543} {\K29}We'll {\K95}never {\K34}be {\K108}forgotten
+Dialogue: Marked=0,0:02:49.91,0:02:56.35,T,,0000,0000,0000,,{\K230} {\K199}Having trust is all we {\K51}may {\K64}need
+Dialogue: Marked=0,0:02:52.97,0:03:02.44,B,,0000,0000,0000,,{\K275} {\K92}You are {\K73}always {\K86}with me {\K69}in the {\K99}life {\K52}I {\K97}lead
+Dialogue: Marked=0,0:02:56.35,0:03:09.17,T,,0000,0000,0000,,{\K540} {\K37}So {\K135}far, {\K154}far away {\K298}from life I used to know
+Dialogue: Marked=0,0:03:02.44,0:03:15.18,B,,0000,0000,0000,,{\K556} {\K155}Worries {\K97}are {\K55}too {\K137}far, {\K131}too
+Dialogue: Marked=0,0:03:09.17,0:03:21.59,T,,0000,0000,0000,,{\K567} {\K47}I will {\K180}stop and close my eyes {\K332}whenever
+Dialogue: Marked=0,0:03:15.18,0:03:25.76,B,,0000,0000,0000,,{\K546} {\K150}And at the {\K104}rainbow {\K50}I can {\K103}take you
+Dialogue: Marked=0,0:03:21.59,0:03:32.41,T,,0000,0000,0000,,{\K326} {\K45}I will {\K78}catch it {\K51}for {\K442}you
+Dialogue: Marked=0,0:03:25.76,0:03:36.72,B,,0000,0000,0000,,{\K733} {\K121}Memories {\K137}you can recall
+Dialogue: Marked=0,0:03:32.41,0:03:39.53,T,,0000,0000,0000,,{\K333} {\K33}With me {\K95}any {\K40}time of {\K66}day
+Dialogue: Marked=0,0:03:36.72,0:03:41.44,B,,0000,0000,0000,,{\K222} {\K147}You can reach out
+Dialogue: Marked=0,0:03:39.53,0:03:45.70,T,,0000,0000,0000,,{\K94} {\K63}You can {\K43}ask {\K78}me in {\K27}your {\K205}soul
+Dialogue: Marked=0,0:03:41.44,0:03:49.27,B,,0000,0000,0000,,{\K382} {\K52}I will {\K104}answer {\K64}when you {\K70}call me
+Dialogue: Marked=0,0:03:45.70,0:03:52.13,T,,0000,0000,0000,,{\K258} {\K44}I will {\K76}go {\K56}no matter {\K76}how
+Dialogue: Marked=0,0:03:49.27,0:03:58.32,B,,0000,0000,0000,,{\K210} {\K162}'Cause we are {\K52}very {\K154}special {\K224}friends
+Dialogue: Marked=0,0:03:52.13,0:04:04.52,T,,0000,0000,0000,,{\K610} {\K249}Just like a river {\K65}that {\K172}flows
+Dialogue: Marked=0,0:03:58.32,0:04:11.37,B,,0000,0000,0000,,{\K523} {\K92}Just like {\K215}stars {\K114}in the {\K139}dark {\K120}night
+Dialogue: Marked=0,0:04:04.52,0:04:14.75,T,,0000,0000,0000,,{\K632} {\K106}Lead me {\K51}in the {\K139}storm
+Dialogue: Marked=0,0:04:11.37,0:04:17.62,B,,0000,0000,0000,,{\K245} {\K104}Lead me {\K60}in the {\K112}dark
+Dialogue: Marked=0,0:04:14.75,0:04:23.87,T,,0000,0000,0000,,{\K237} {\K157}You are the {\K82}light {\K25}of {\K50}my {\K262}mind
+Dialogue: Marked=0,0:04:17.62,0:04:26.82,B,,0000,0000,0000,,{\K569} {\K257}Oh~
+Dialogue: Marked=0,0:04:23.87,0:04:30.06,T,,0000,0000,0000,,{\K206} {\K54}I will {\K107}be there {\K140}if you need me
+Dialogue: Marked=0,0:04:26.82,0:04:32.98,B,,0000,0000,0000,,{\K226} {\K52}And I {\K73}know {\K135}you'll do the same
+Dialogue: Marked=0,0:04:30.06,0:04:39.44,T,,0000,0000,0000,,{\K214} {\K149}I can see you, {\K160}I can hear you {\K50}in my {\K208}heart
+Dialogue: Marked=0,0:04:32.98,0:04:42.53,B,,0000,0000,0000,,{\K551} {\K54}You will {\K106}be here {\K138}if I need you
+Dialogue: Marked=0,0:04:39.44,0:04:45.59,T,,0000,0000,0000,,{\K215} {\K53}I will {\K91}never {\K40}have to {\K109}guess
+Dialogue: Marked=0,0:04:42.53,0:04:50.95,B,,0000,0000,0000,,{\K216} {\K162}'Cause we are {\K52}very {\K154}special {\K224}friends
+Dialogue: Marked=0,0:04:45.59,0:04:54.97,T,,0000,0000,0000,,{\K588} {\K121}Memories {\K137}you can recall
+Dialogue: Marked=0,0:04:50.95,0:04:57.78,B,,0000,0000,0000,,{\K304} {\K33}With me {\K95}any {\K40}time of {\K66}day
+Dialogue: Marked=0,0:04:54.97,0:04:59.68,T,,0000,0000,0000,,{\K225} {\K147}You can reach up
+Dialogue: Marked=0,0:04:57.78,0:05:03.70,B,,0000,0000,0000,,{\K95} {\K63}You can {\K43}ask {\K78}me in {\K27}your {\K205}soul
+Dialogue: Marked=0,0:04:59.68,0:05:07.69,T,,0000,0000,0000,,{\K383} {\K52}I will {\K104}answer {\K64}when you {\K70}call me
+Dialogue: Marked=0,0:05:03.70,0:05:10.75,B,,0000,0000,0000,,{\K300} {\K44}I will {\K76}come {\K56}no matter {\K76}how
+Dialogue: Marked=0,0:05:07.69,0:05:17.33,T,,0000,0000,0000,,{\K210} {\K162}'Cause we are {\K52}very {\K154}special {\K224}friends
