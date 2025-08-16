@@ -83,21 +83,35 @@ class SonicHubConverter:
         
         for match in re.finditer(post_pattern, content, re.DOTALL):
             values_text = match.group(1)
-            post_records = self._parse_sql_values(values_text)
+            post_records = self._parse_sql_posts_values(values_text)
             
             for record in post_records:
                 if len(record) >= 9:
                     try:
+                        # Clean and convert fields
+                        pid = int(record[0])
+                        fid = int(record[1]) 
+                        tid = int(record[2])
+                        first = int(record[3])
+                        author = record[4].strip("'\"")
+                        authorid = int(record[5])
+                        subject = record[6].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n')
+                        # Handle empty subjects
+                        if not subject.strip():
+                            subject = "(無標題)"
+                        dateline = int(record[7])
+                        message = record[8].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n')
+                        
                         post = {
-                            'pid': int(record[0]),
-                            'fid': int(record[1]),
-                            'tid': int(record[2]),
-                            'first': int(record[3]),
-                            'author': record[4].strip("'\""),
-                            'authorid': int(record[5]),
-                            'subject': record[6].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n'),
-                            'dateline': int(record[7]),
-                            'message': record[8].strip("'\"").replace('\\r\\n', '\n').replace('\\n', '\n')
+                            'pid': pid,
+                            'fid': fid,
+                            'tid': tid,
+                            'first': first,
+                            'author': author,
+                            'authorid': authorid,
+                            'subject': subject,
+                            'dateline': dateline,
+                            'message': message
                         }
                         self.posts.append(post)
                         
@@ -106,7 +120,7 @@ class SonicHubConverter:
                             self.forums[post['fid']]['posts'].append(post)
                             
                     except (ValueError, IndexError) as e:
-                        print(f"警告: 無法解析文章記錄: {e}")
+                        print(f"警告: 無法解析文章記錄 PID {record[0] if len(record) > 0 else 'unknown'}: {e}")
                         continue
     
     def _extract_attachments(self, content):
@@ -134,8 +148,89 @@ class SonicHubConverter:
                         print(f"警告: 無法解析附件記錄: {e}")
                         continue
     
+    def _parse_sql_posts_values(self, values_text):
+        """Parse SQL VALUES clause for posts table - more robust parsing"""
+        # This method specifically handles the posts table structure
+        # Posts table has this structure: (pid, fid, tid, first, author, authorid, subject, dateline, message, ...)
+        
+        records = []
+        values_text = values_text.strip()
+        
+        # Find all record start positions by looking for patterns like (number,
+        record_starts = []
+        for match in re.finditer(r'\(\s*(\d+)\s*,', values_text):
+            record_starts.append((match.start(), match.group(1)))  # Store position and PID
+        
+        # Process each record
+        for i, (start_pos, pid) in enumerate(record_starts):
+            # Find the end of this record
+            if i + 1 < len(record_starts):
+                end_pos = record_starts[i + 1][0]
+            else:
+                end_pos = len(values_text)
+            
+            record_text = values_text[start_pos:end_pos].strip()
+            if record_text.endswith(','):
+                record_text = record_text[:-1]
+            
+            # Remove outer parentheses
+            if record_text.startswith('(') and record_text.endswith(')'):
+                record_text = record_text[1:-1]
+            
+            # Parse the fields within this record
+            try:
+                fields = self._parse_record_fields(record_text)
+                if len(fields) >= 9:  # We need at least 9 fields for a valid post
+                    # Clean the PID field to make sure it doesn't have extra characters
+                    fields[0] = pid  # Use the PID we extracted from the regex
+                    records.append(fields)
+            except Exception as e:
+                print(f"警告: 無法解析文章記錄 PID {pid}: {e}")
+                continue
+        
+        return records
+    
+    def _parse_record_fields(self, record_text):
+        """Parse individual record fields handling quotes and escaping"""
+        fields = []
+        current_field = ""
+        in_quotes = False
+        quote_char = None
+        i = 0
+        
+        while i < len(record_text):
+            char = record_text[i]
+            
+            if char in ("'", '"') and not in_quotes:
+                # Starting a quoted field
+                in_quotes = True
+                quote_char = char
+            elif char == quote_char and in_quotes:
+                # Check for escaped quote (doubled quotes)
+                if i + 1 < len(record_text) and record_text[i + 1] == quote_char:
+                    current_field += char
+                    i += 1  # Skip the next character
+                else:
+                    # End of quoted field
+                    in_quotes = False
+                    quote_char = None
+            elif char == ',' and not in_quotes:
+                # Field separator
+                fields.append(current_field.strip())
+                current_field = ""
+            else:
+                current_field += char
+            
+            i += 1
+        
+        # Add the last field
+        if current_field.strip():
+            fields.append(current_field.strip())
+        
+        return fields
+    
     def _parse_sql_values(self, values_text):
-        """Parse SQL VALUES clause into individual records"""
+        """Parse SQL VALUES clause into individual records - generic version"""
         # Simple parser for SQL VALUES - handles basic cases
         records = []
         current_record = []
@@ -198,6 +293,43 @@ class SonicHubConverter:
             i += 1
         
         return records
+        """Parse individual record fields handling quotes and escaping"""
+        fields = []
+        current_field = ""
+        in_quotes = False
+        quote_char = None
+        i = 0
+        
+        while i < len(record_text):
+            char = record_text[i]
+            
+            if char in ("'", '"') and not in_quotes:
+                # Starting a quoted field
+                in_quotes = True
+                quote_char = char
+            elif char == quote_char and in_quotes:
+                # Check for escaped quote (doubled quotes)
+                if i + 1 < len(record_text) and record_text[i + 1] == quote_char:
+                    current_field += char
+                    i += 1  # Skip the next character
+                else:
+                    # End of quoted field
+                    in_quotes = False
+                    quote_char = None
+            elif char == ',' and not in_quotes:
+                # Field separator
+                fields.append(current_field.strip())
+                current_field = ""
+            else:
+                current_field += char
+            
+            i += 1
+        
+        # Add the last field
+        if current_field.strip():
+            fields.append(current_field.strip())
+        
+        return fields
     
     def _organize_threads(self):
         """Organize posts into threads"""
@@ -567,7 +699,7 @@ pre {
                     first_post = thread_posts[0]  # Original post
                     forum_threads.append({
                         'tid': tid,
-                        'title': first_post['subject'] or '(無標題)',
+                        'title': first_post['subject'] if first_post['subject'].strip() else '(無標題)',
                         'author': first_post['author'],
                         'dateline': first_post['dateline'],
                         'replies': len(thread_posts) - 1,
@@ -631,7 +763,7 @@ pre {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(first_post['subject'] or '(無標題)')} - SonicHub 討論區備份</title>
+    <title>{html.escape(first_post['subject'] if first_post['subject'].strip() else '(無標題)')} - SonicHub 討論區備份</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -641,7 +773,7 @@ pre {
             <a href="forum_{first_post['fid']}.html">📁 {html.escape(forum['name'])}</a>
         </div>
         
-        <h1>{html.escape(first_post['subject'] or '(無標題)')}</h1>
+        <h1>{html.escape(first_post['subject'] if first_post['subject'].strip() else '(無標題)')}</h1>
         
 """
             
