@@ -49,6 +49,29 @@ class SonicHubConverter:
         
         print(f"解析完成: {len(self.forums)} 個版塊, {len(self.posts)} 篇文章, {len(self.attachments)} 個附件")
     
+    def _clean_bbcode_simple(self, text):
+        """Simple BBCode cleaning for use during data extraction"""
+        if not text:
+            return ""
+        
+        # Remove BBCode tags but preserve content
+        text = re.sub(r'\[font=[^\]]*\](.*?)\[/font\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[i=s\](.*?)\[/i\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)  
+        text = re.sub(r'\[b\](.*?)\[/b\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[i\](.*?)\[/i\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[u\](.*?)\[/u\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[color=[^\]]*\](.*?)\[/color\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[size=[^\]]*\](.*?)\[/size\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[url=[^\]]*\](.*?)\[/url\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[url\](.*?)\[/url\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[img\](.*?)\[/img\]', r'[圖片]', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[youtube\](.*?)\[/youtube\]', r'[影片]', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[quote\](.*?)\[/quote\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[code\](.*?)\[/code\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[attach\]\d+\[/attach\]', r'[附件]', text, flags=re.DOTALL | re.IGNORECASE)
+        
+        return text.strip()
+    
     def _extract_forums(self, content):
         """Extract forum data from SQL"""
         # Find the INSERT statement for cdb_forums
@@ -154,7 +177,9 @@ class SonicHubConverter:
                         if not subject.strip():
                             message_preview = record[8].strip("'\"").replace('\\r\\n', ' ').replace('\\n', ' ')[:50]
                             if message_preview.strip():
-                                subject = f"[{message_preview}...]"
+                                # Clean BBCode from the preview to make it more readable
+                                clean_preview = self._clean_bbcode_simple(message_preview)
+                                subject = f"[{clean_preview}...]"
                             else:
                                 subject = f"[PID {pid}]"
                         
@@ -381,8 +406,14 @@ class SonicHubConverter:
         # Escape HTML characters first
         text = html.escape(text)
         
+        # Remove unsupported font selection BBCode first (before other conversions)
+        text = re.sub(r'\[font=[^\]]*\](.*?)\[/font\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        
         # Convert common BBCode tags
         conversions = [
+            # Special italic with serif support [i=s] - must come before regular [i] tag
+            (r'\[i=s\](.*?)\[/i\]', r'<em style="font-family: serif;">\1</em>'),
+            
             # Basic formatting
             (r'\[b\](.*?)\[/b\]', r'<strong>\1</strong>'),
             (r'\[i\](.*?)\[/i\]', r'<em>\1</em>'),
@@ -391,8 +422,10 @@ class SonicHubConverter:
             # Colors
             (r'\[color=(.*?)\](.*?)\[/color\]', r'<span style="color: \1">\2</span>'),
             
-            # Size
-            (r'\[size=(.*?)\](.*?)\[/size\]', r'<span style="font-size: \1px">\2</span>'),
+            # Size - increase minimum size for small text (was too small)
+            (r'\[size=([12])\](.*?)\[/size\]', r'<span style="font-size: 10px">\2</span>'),  # Minimum 10px instead of 1-2px
+            (r'\[size=([3-4])\](.*?)\[/size\]', r'<span style="font-size: 12px">\2</span>'),  # Small sizes become 12px
+            (r'\[size=(\d+)\](.*?)\[/size\]', r'<span style="font-size: \1px">\2</span>'),   # Regular sizes unchanged
             
             # Links
             (r'\[url=(.*?)\](.*?)\[/url\]', r'<a href="\1" target="_blank">\2</a>'),
@@ -421,6 +454,29 @@ class SonicHubConverter:
         text = text.replace('\n', '<br>')
         
         return text
+    
+    def clean_bbcode_for_text(self, text):
+        """Remove BBCode tags and return plain text for titles, etc."""
+        if not text:
+            return ""
+        
+        # Remove BBCode tags but preserve content
+        text = re.sub(r'\[font=[^\]]*\](.*?)\[/font\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[i=s\](.*?)\[/i\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)  
+        text = re.sub(r'\[b\](.*?)\[/b\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[i\](.*?)\[/i\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[u\](.*?)\[/u\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[color=[^\]]*\](.*?)\[/color\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[size=[^\]]*\](.*?)\[/size\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[url=[^\]]*\](.*?)\[/url\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[url\](.*?)\[/url\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[img\](.*?)\[/img\]', r'[圖片]', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[youtube\](.*?)\[/youtube\]', r'[影片]', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[quote\](.*?)\[/quote\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[code\](.*?)\[/code\]', r'\1', text, flags=re.DOTALL | re.IGNORECASE)
+        text = re.sub(r'\[attach\]\d+\[/attach\]', r'[附件]', text, flags=re.DOTALL | re.IGNORECASE)
+        
+        return text.strip()
     
     def _replace_attachment(self, match):
         """Replace attachment BBCode with HTML"""
@@ -687,6 +743,37 @@ pre {
         <div class="stats">
             📊 統計資料: {len(self.forums)} 個討論版塊 | {len(self.posts)} 篇文章 | {len(self.attachments)} 個附件
         </div>
+
+        <!-- Search functionality -->
+        <div class="search-container">
+            <h2>🔍 搜尋功能</h2>
+            <p>輸入關鍵字來搜尋文章標題、作者或內容</p>
+            
+            <form id="search-form" class="search-form">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="輸入搜尋關鍵字（例如：Sonic、遊戲、攻略）"
+                    autocomplete="off"
+                >
+                <button type="submit" class="search-button">搜尋</button>
+            </form>
+            
+            <div class="search-options">
+                <div class="search-option">
+                    <span>搜尋範圍：作者、標題、文章內容</span>
+                </div>
+            </div>
+            
+            <div id="search-loading" class="search-loading">
+                正在搜尋中，請稍候...
+            </div>
+            
+            <div id="search-results" class="search-results">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
         
         <h2>討論版塊</h2>
         <ul class="forum-list">
@@ -765,6 +852,7 @@ pre {
             <p>由 SonicHub SQL 轉換器生成 | 靜態網站版本</p>
         </div>
     </div>
+    <script src="search.js"></script>
 </body>
 </html>"""
         
@@ -817,9 +905,11 @@ pre {
             
             for thread in forum_threads:
                 date_str = datetime.fromtimestamp(thread['dateline']).strftime('%Y-%m-%d %H:%M')
+                # Clean thread title of BBCode for link text
+                clean_title = self.clean_bbcode_for_text(thread['title'])
                 html_content += f"""            <li class="thread-item">
                 <div class="thread-title">
-                    <a href="thread_{thread['tid']}.html">{html.escape(thread['title'])}</a>
+                    <a href="thread_{thread['tid']}.html">{html.escape(clean_title)}</a>
                 </div>
                 <div class="thread-meta">
                     👤 {html.escape(thread['author'])} | 🕐 {date_str} | 💬 {thread['replies']} 個回覆
@@ -844,12 +934,18 @@ pre {
             first_post = posts[0]
             forum = self.forums.get(first_post['fid'], {'name': '未知版塊'})
             
+            # Process subject: HTML for h1, clean text for title
+            subject_text = first_post['subject'] if first_post['subject'].strip() else '(無標題)'
+            processed_subject = self.convert_bbcode_to_html(subject_text)
+            # For HTML title, we need clean text without any markup
+            title_text = self.clean_bbcode_for_text(subject_text)
+            
             html_content = f"""<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(first_post['subject'] if first_post['subject'].strip() else '(無標題)')} - SonicHub 討論區備份</title>
+    <title>{html.escape(title_text)} - SonicHub 討論區備份</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -859,7 +955,7 @@ pre {
             <a href="forum_{first_post['fid']}.html">📁 {html.escape(forum['name'])}</a>
         </div>
         
-        <h1>{html.escape(first_post['subject'] if first_post['subject'].strip() else '(無標題)')}</h1>
+        <h1>{processed_subject}</h1>
         
 """
             

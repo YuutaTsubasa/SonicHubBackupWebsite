@@ -14,6 +14,37 @@
         <div class="stats">
             📊 統計資料: 27 個討論版塊 | 41308 篇文章 | 1405 個附件
         </div>
+
+        <!-- Search functionality -->
+        <div class="search-container">
+            <h2>🔍 搜尋功能</h2>
+            <p>輸入關鍵字來搜尋文章標題、作者或內容</p>
+            
+            <form id="search-form" class="search-form">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="輸入搜尋關鍵字（例如：Sonic、遊戲、攻略）"
+                    autocomplete="off"
+                >
+                <button type="submit" class="search-button">搜尋</button>
+            </form>
+            
+            <div class="search-options">
+                <div class="search-option">
+                    <span>搜尋範圍：作者、標題、文章內容</span>
+                </div>
+            </div>
+            
+            <div id="search-loading" class="search-loading">
+                正在搜尋中，請稍候...
+            </div>
+            
+            <div id="search-results" class="search-results">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
         
         <h2>討論版塊</h2>
         <ul class="forum-list">
@@ -100,5 +131,6 @@
             <p>由 SonicHub SQL 轉換器生成 | 靜態網站版本</p>
         </div>
     </div>
+    <script src="search.js"></script>
 </body>
 </html>
