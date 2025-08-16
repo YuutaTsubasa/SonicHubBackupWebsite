@@ -61,17 +61,21 @@ class SonicHubConverter:
             forum_records = self._parse_sql_values(values_text)
             
             for record in forum_records:
-                if len(record) >= 4:
+                if len(record) >= 6:
                     fid = int(record[0]) if record[0].isdigit() else 0
                     fup = int(record[1]) if record[1].isdigit() else 0
                     forum_type = record[2].strip("'\"")
                     name = record[3].strip("'\"").replace('\\r\\n', '').replace('\\n', '')
+                    status = int(record[4]) if record[4].isdigit() else 1
+                    displayorder = int(record[5]) if record[5].isdigit() else 0
                     
                     self.forums[fid] = {
                         'fid': fid,
                         'fup': fup,
                         'type': forum_type,
                         'name': name,
+                        'status': status,
+                        'displayorder': displayorder,
                         'posts': [],
                         'threads': []
                     }
@@ -688,18 +692,63 @@ pre {
         <ul class="forum-list">
 """
         
-        # Sort forums by ID and handle hierarchy
-        sorted_forums = sorted(self.forums.items(), key=lambda x: x[0])
+        # Group forums by their parent categories
+        categories = {}
+        standalone_forums = []
         
-        for fid, forum in sorted_forums:
+        # First, collect all categories and forums
+        for fid, forum in self.forums.items():
             if forum['type'] == 'group':
-                # Categories are displayed as headers, not clickable links
-                html_content += f"""            <li class="forum-category">
-                <h3 style="color: #0066cc; margin: 20px 0 10px 0; font-size: 1.2em; border-bottom: 1px solid #ddd;">{html.escape(forum['name'])}</h3>
+                categories[fid] = {
+                    'info': forum,
+                    'forums': []
+                }
+            elif forum['type'] == 'forum':
+                if forum['fup'] == 0:
+                    # Standalone forum (no parent category)
+                    standalone_forums.append((fid, forum))
+                else:
+                    # Forum belongs to a category
+                    parent_id = forum['fup']
+                    if parent_id in categories:
+                        categories[parent_id]['forums'].append((fid, forum))
+        
+        # Sort categories by displayorder, then by FID
+        sorted_categories = sorted(categories.items(), key=lambda x: (x[1]['info'].get('displayorder', 0), x[0]))
+        
+        # Generate HTML for each category and its forums
+        for cat_id, category_data in sorted_categories:
+            category_info = category_data['info']
+            forums_in_category = category_data['forums']
+            
+            # Only show categories that have active forums
+            active_forums = [(fid, forum) for fid, forum in forums_in_category if forum.get('status', 0) == 1]
+            if not active_forums:
+                continue
+                
+            # Show category header
+            html_content += f"""            <li class="forum-category">
+                <h3 style="color: #0066cc; margin: 20px 0 10px 0; font-size: 1.2em; border-bottom: 1px solid #ddd;">{html.escape(category_info['name'])}</h3>
             </li>
 """
-            elif forum['type'] == 'forum':
-                # Actual forums are clickable
+            
+            # Sort forums within this category by displayorder, then by FID
+            sorted_forums = sorted(active_forums, key=lambda x: (x[1].get('displayorder', 0), x[0]))
+            
+            # Show forums in this category
+            for fid, forum in sorted_forums:
+                thread_count = len([tid for tid in self.threads if any(p['fid'] == fid for p in self.threads[tid])])
+                post_count = len(forum['posts'])
+                
+                html_content += f"""            <li class="forum-item">
+                <a href="forum_{fid}.html">{html.escape(forum['name'])}</a>
+                <div class="thread-meta">{thread_count} 個主題 | {post_count} 篇文章</div>
+            </li>
+"""
+        
+        # Show any standalone forums (forums with fup=0 that are not groups)
+        for fid, forum in standalone_forums:
+            if forum.get('status', 0) == 1:  # Only active forums
                 thread_count = len([tid for tid in self.threads if any(p['fid'] == fid for p in self.threads[tid])])
                 post_count = len(forum['posts'])
                 
